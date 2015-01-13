@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Show viewer demo</title>
+<meta charset="utf8">
+<!-- ETV stylesheet -->
+<link rel="stylesheet" href="http://etv.err.ee/Content/less/theme/etv/bootstrap.less">
+<!-- CSS for the timeline -->
+<link rel="stylesheet" href="../../timeline/bower_components/fontawesome/css/font-awesome.css">
+<link rel="stylesheet" href="../../timeline/style.css">
+<!-- Show viewer timeline -->
+<link rel="stylesheet" href="../style.css">
+<!-- Dependencies (remember to `bower install` in the module folder before   -->
+<!-- running this demo                                                       -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/moment/min/moment-with-locales.min.js"></script>
+<script src="../bower_components/angular/angular.min.js"></script>
+<script src="../../timeline/bower_components/underscore/underscore-min.js"></script>
+<script src="../../timeline/bower_components/angular-touch/angular-touch.min.js"></script>
+<script src="../../timeline/bower_components/hamsterjs/hamster.js"></script>
+<script src="../../timeline/bower_components/angular-mousewheel/mousewheel.js"></script>
+<!-- For debugging purposes, I include each script explicitly.               -->
+<!-- In production, you would ng-annotate=>concatenate=>uglify the scripts   -->
+<!-- to produce one small bundle script                                      -->
+<!-- Timeline: -->
+<script src="../../timeline/module.js"></script>
+<script src="../../timeline/timeline-service.js"></script>
+<script src="../../timeline/timeline-filters.js"></script>
+<script src="../../timeline/timeline-template.js"></script>
+<script src="../../timeline/timeline-controller.js"></script>
+<script src="../../timeline/timeline-directive.js"></script>
+<script src="../../timeline/days-directive.js"></script>
+<script src="../../timeline/day-directive.js"></script>
+<script src="../../timeline/items-directive.js"></script>
+<!-- Show viewer: -->
+<script src="../module.js"></script>
+<script src="../show-viewer-directive.js"></script>
+<!-- This script defines our angular application.  Its main purpose is to    -->
+<!-- reference the battlesnake.timeline module, so that our timeline         -->
+<!-- directive is recognised.                                                -->
+<script>
+(function (angular) {
+	'use strict';
+
+	angular.module('demo', ['battlesnake.show-viewer', 'battlesnake.timeline'])
+		.controller('demoController', demoController);
+
+	function demoController($scope) {
+		$scope.model = {
+			title: 'Show viewer demo',
+			show: null
+		};
+		$scope.openItem = function (item) {
+			var data = item.itemData;
+			console.log(data);
+			$scope.model.show = {
+				title: data.HeaderLong || data.Header,
+				image: data.Image,
+				description: data.Lead,
+				start: data.Published,
+				hasAudio: data.hasAudio,
+				hasVideo: data.hasVideo,
+				mainUrl: '#',
+				channelUrl: '#'
+			};
+		};
+	}
+
+})(window.angular);
+</script>
+<!-- This script defines the adapter for getting timeline data from the      -->
+<!-- server.  It defines a factory called "ETVTimelineAdapter".  Examine the -->
+<!-- script to see how to define your own adapters                           -->
+<script src="etv-adapter.js"></script>
+<style>
+body {
+	font-family: sans-serif;
+	margin: 0px;
+}
+h1 {
+	margin: 60px;
+}
+</style>
+</head>
+<body ng-app="demo" ng-controller="demoController">
+	<h1 ng-bind="model.title"></h1>
+	<!-- The "timeline" attribute specifies the name of the factory that     -->
+	<!-- provides the adapter to use.  The provided name has TimelineAdapter -->
+	<!-- appended to it, to produce the name of the factory.  This example   -->
+	<!-- factory is found in the associated script (etv-adapter.js)          -->
+	<div timeline="ETV" timeline-open-item="openItem(item);"></div>
+	<div show-viewer="model.show" collapsible="true" style="margin: 0 auto; width: 900px; min-width: 900px; max-width: 900px; border: 1px solid #aaa; border-top: 0; box-shadow: 0px 0px 12px 3px rgba(90, 90, 90, 0.5);"></div>
+	<!-- That's all there is to it! -->
+	<p style="margin: 2em auto 1em; max-width: 600px; line-height: 1.7em;">
+		<strong>NOTE:</strong> Since we are using the err.ee api from outside the
+		err.ee domain, your browser will block the XHRs due to CORS. To disable
+		CORS in chrome or chromium, launch it with the
+		<b>--disable-web-security</b> command-line parameter. The demos will not
+		work otherwise. There is no reliable way to disable CORS in Firefox.
+	</p>
+</body>
+</html>

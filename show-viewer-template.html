@@ -1,0 +1,19 @@
+<div class="show-viewer-container">
+	<div class="show-viewer-top-arrow" ng-show="!!show" ng-click="collapsed = !collapsed"></div>
+	<div class="show-viewer" ng-class="{ collapsed: (collapsible && (collapsed || !show)) }">
+		<div class="media-container">
+			<div class="media">
+				:-)
+			</div>
+		</div>
+		<div class="info">
+			<a ng-href="{{ show.mainUrl }}"><h4 ng-bind="show.title"></h4></a>
+			<h5 ng-bind="show.title"></h5>
+			<div class="meta timestamp" ng-bind="show.start"></div>
+			<div class="lead">
+				<p ng-bind="show.description"></p>
+			</div>
+			<a ng-href="{{ show.channelUrl }}" target="_blank">Ava uues aknas</a>
+		</div>
+	</div>
+</div>
