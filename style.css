@@ -1,43 +1,56 @@
-.show-viewer {
-	padding: 16px;
-	width: 100%;
-	position: relative;
-	box-sizing: border-box;
-	display: table;
-}
-
 .show-viewer.collapsed {
 	display: none;
 }
 
-.show-viewer>* {
-	display: table-cell;
-	vertical-align: top;
-	box-sizing: border-box;
-}
-
-.show-viewer .media-container {
-	position: relative;
-	width: 332px;
-}
-
-.show-viewer .media {
+.show-viewer .show-media-live-container {
 	/* 56.25% = 9/16, i.e. 16:9 aspect ratio */
-	width: 100%;
 	padding-bottom: 56.25%;
 	overflow: hidden;
 	background: #bbb;
 	box-sizing: border-box;
+	position: relative;
 }
 
-.show-viewer .media>* {
+.show-viewer .show-media-live-container>* {
 	position: absolute;
 	left: 0;
 	top: 0;
 	right: 0;
 	bottom: 0;
+	width: 100%;
+	height: 100%;
 }
 
-.show-viewer .info {
-	padding-left: 16px;
+.show-viewer .show-media-live {
+	border: 0;
+	overflow: hidden;
+}
+
+.show-viewer img {
+	width: 100%;
+}
+
+.show-viewer .show-media-sources {
+	display: block;
+	padding-top: 6px;
+}
+
+.show-viewer .show-media-source {
+	border: 2px solid #bbb;
+	color : #bbb;
+	display: inline-block;
+	width: 65px;
+	padding: 4px;
+	transition: none;
+}
+
+.show-viewer .show-media-source.selected {
+	border-color: #f69cbd;
+	color: #f69cbd;
+	transition: all 200ms ease;
+}
+
+.show-viewer .show-media-source:hover {
+	border-color: #ea297a;
+	color: #ea297a;
 }

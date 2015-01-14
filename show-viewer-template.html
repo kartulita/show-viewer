@@ -1,15 +1,25 @@
-<div class="show-viewer">
-	<div class="media-container">
-		<div class="media">
-			:-)
+<!-- Uses bootstrap -->
+<div class="show-viewer row">
+	<div class="span6" ng-if="show.media || show.image">
+		<div class="show-media">
+			<img ng-if="show.image && !show.media" ng-src="{{ show.image }}" width="100%">
+			<div class="show-media-live-container" ng-if="activeSource">
+				<iframe ng-src="{{ activeSource }}" class="show-media-live" scrolling="no"></iframe>
+			</div>
+			<div class="show-media-sources" ng-if="show.media.sources.length > 1">
+				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-bind="'#' + ($index + 1)" ng-click="selectSource(source)"></a>
+			</div>
 		</div>
 	</div>
-	<div class="info">
-		<a ng-href="{{ show.mainUrl }}"><h4 ng-bind="show.title"></h4></a>
-		<div class="meta timestamp" ng-bind="show.start | showViewerDateTime"></div>
-		<div class="lead">
-			<p ng-bind="show.description"></p>
+	<div class="span6">
+		<div class="show-info">
+			<a class="show-target-link" ng-href="{{ show.targetUrl }}"><h4 ng-bind="show.title" class="show-title"></h4></a>
+			<div class="meta">
+				<div class="show-timestamp timestamp" ng-bind="show.start | showViewerDateTime"></div>
+			</div>
+			<div class="show-description lead" ng-bind-html="show.description"></div>
+			<a ng-if="show.categoryUrl" ng-href="{{ show.categoryUrl }}" class="show-category-link marker-more">Saatsesarja kodulehele</a>
+			<a ng-if="show.channelUrl" ng-href="{{ show.channelUrl }}" class="show-channel-link" target="_blank">Ava uues aknas</a>
 		</div>
-		<a ng-href="{{ show.channelUrl }}" target="_blank">Ava uues aknas</a>
 	</div>
 </div>
