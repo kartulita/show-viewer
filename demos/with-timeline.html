@@ -50,10 +50,16 @@
 		$scope.model = {
 			title: 'Show viewer demo with timeline binding',
 			showViewer: false,
-			show: null
+			show: null,
+			lastItem: null
 		};
 		$scope.openItem = function (item) {
+			if ($scope.model.lastItem === item) {
+				$scope.model.showViewer = !$scope.model.showViewer;
+				return;
+			}
 			var data = item.itemData;
+			$scope.model.lastItem = item;
 			$scope.model.showViewer = true;
 			$scope.model.show = {
 				title: data.HeaderLong || data.Header,
