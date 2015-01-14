@@ -35,6 +35,7 @@
 <!-- Show viewer: -->
 <script src="../module.js"></script>
 <script src="../show-viewer-directive.js"></script>
+<script src="../show-viewer-filters.js"></script>
 <!-- This script defines our angular application.  Its main purpose is to    -->
 <!-- reference the battlesnake.timeline module, so that our timeline         -->
 <!-- directive is recognised.                                                -->
@@ -47,7 +48,7 @@
 
 	function demoController($scope) {
 		$scope.model = {
-			title: 'Show viewer demo',
+			title: 'Show viewer demo with timeline binding',
 			showViewer: false,
 			show: null
 		};

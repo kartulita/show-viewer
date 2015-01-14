@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Show viewer demo</title>
+<meta charset="utf8">
+<!-- ETV stylesheet -->
+<link rel="stylesheet" href="http://etv.err.ee/Content/less/theme/etv/bootstrap.less">
+<!-- Show viewer timeline -->
+<link rel="stylesheet" href="../style.css">
+<!-- Dependencies (remember to `bower install` in the module folder before   -->
+<!-- running this demo                                                       -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../bower_components/moment/min/moment-with-locales.min.js"></script>
+<script src="../bower_components/angular/angular.min.js"></script>
+<!-- For debugging purposes, I include each script explicitly.               -->
+<!-- In production, you would ng-annotate=>concatenate=>uglify the scripts   -->
+<!-- to produce one small bundle script                                      -->
+<!-- Show viewer: -->
+<script src="../module.js"></script>
+<script src="../show-viewer-directive.js"></script>
+<script src="../show-viewer-filters.js"></script>
+<!-- This script defines our angular application.  Its main purpose is to    -->
+<!-- reference the battlesnake.timeline module, so that our timeline         -->
+<!-- directive is recognised.                                                -->
+<script>
+(function (angular) {
+	'use strict';
+
+	angular.module('demo', ['battlesnake.show-viewer'])
+		.controller('demoController', demoController);
+
+	function demoController($scope, $http) {
+		$scope.model = {
+			title: 'Show viewer demo',
+			shows: []
+		};
+		var request = {
+			method: 'GET',
+			url: 'http://etv.err.ee/api/loader/GetTimelineDay',
+			params: {
+				year: moment().year(),
+				month: moment().month() + 1,
+				day: moment().date()
+			}
+		}
+		$scope.showListItem = function (show) {
+			return show.start.format('HH:mm') + ': ' + show.title;
+		};
+
+		$http(request).success(openItem);
+		return;
+
+		function openItem(data, status) {
+			$scope.model.shows = data.map(mapShow).sort(showComparator);
+			$scope.model.show = $scope.model.shows.reduce(findCurrent, { found: false, show: null }).show;
+		}
+
+		function showComparator(a, b) {
+			return a.start.unix() - b.start.unix();
+		}
+
+		function findCurrent(memo, show) {
+			if (show.start.unix() > moment().unix()) {
+				memo.found = true;
+			} else {
+				memo.show = show;
+			}
+			return memo;
+		}
+		
+		function mapShow(data) {
+			return {
+				title: data.HeaderLong || data.Header,
+				image: data.Image,
+				description: data.Lead,
+				start: moment(data.Published),
+				hasAudio: data.hasAudio,
+				hasVideo: data.hasVideo,
+				mainUrl: '#',
+				channelUrl: '#'
+			};
+		}
+	}
+
+})(window.angular);
+</script>
+<style>
+body {
+	font-family: sans-serif;
+}
+h1 {
+	margin: 60px;
+}
+.main {
+	margin: 60px auto;
+	width: 900px;
+}
+.main>* {
+	margin-bottom: 60px;
+}
+.main>.show-viewer {
+	width: 100%;
+	border: 1px solid #aaa;
+	box-shadow: 0px 0px 12px 3px rgba(90, 90, 90, 0.5);
+}
+.main>.show-chooser {
+}
+</style>
+</head>
+<body ng-app="demo" ng-controller="demoController">
+	<h1 ng-bind="model.title"></h1>
+	<div class="main">
+		<select ng-options="show as showListItem(show) for show in model.shows" ng-model="model.show" class="show-chooser"></select>
+		<!-- The show viewer                                                     -->
+		<div show-viewer="model.show" class="show-viewer"></div>
+		<!-- That's all there is to it! -->
+	</div>
+	<p style="margin: 2em auto 1em; max-width: 600px; line-height: 1.7em;">
+		<strong>NOTE:</strong> Since we are using the err.ee api from outside the
+		err.ee domain, your browser will block the XHRs due to CORS. To disable
+		CORS in chrome or chromium, launch it with the
+		<b>--disable-web-security</b> command-line parameter. The demos will not
+		work otherwise. There is no reliable way to disable CORS in Firefox.
+	</p>
+</body>
+</html>

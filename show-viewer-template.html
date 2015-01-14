@@ -6,8 +6,7 @@
 	</div>
 	<div class="info">
 		<a ng-href="{{ show.mainUrl }}"><h4 ng-bind="show.title"></h4></a>
-		<h5 ng-bind="show.title"></h5>
-		<div class="meta timestamp" ng-bind="show.start"></div>
+		<div class="meta timestamp" ng-bind="show.start | showViewerDateTime"></div>
 		<div class="lead">
 			<p ng-bind="show.description"></p>
 		</div>
