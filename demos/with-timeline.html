@@ -36,9 +36,7 @@
 <script src="../module.js"></script>
 <script src="../show-viewer-directive.js"></script>
 <script src="../show-viewer-filters.js"></script>
-<!-- This script defines our angular application.  Its main purpose is to    -->
-<!-- reference the battlesnake.timeline module, so that our timeline         -->
-<!-- directive is recognised.                                                -->
+<!-- Our demo script -->
 <script>
 (function (angular) {
 	'use strict';
@@ -46,7 +44,7 @@
 	angular.module('demo', ['battlesnake.show-viewer', 'battlesnake.timeline'])
 		.controller('demoController', demoController);
 
-	function demoController($scope, ETVTimelineAdapter) {
+	function demoController($scope, ETVShowViewerAdapter) {
 		$scope.model = {
 			title: 'Show viewer demo with timeline binding',
 			showViewer: false,
@@ -61,7 +59,7 @@
 			}
 			$scope.model.lastItem = item;
 			/* Get details */
-			return ETVTimelineAdapter.getDetails(item.itemData)
+			return ETVShowViewerAdapter.getDetails(item.itemData)
 				.then(function (showDetails) {
 					$scope.model.showViewer = true;
 					$scope.model.show = showDetails;
@@ -71,9 +69,6 @@
 
 })(window.angular);
 </script>
-<!-- This script defines the adapter for getting timeline data from the      -->
-<!-- server.  It defines a factory called "ETVTimelineAdapter".  Examine the -->
-<!-- script to see how to define your own adapters                           -->
 <script src="etv-adapter.js"></script>
 <style>
 body {
@@ -126,22 +121,14 @@ body {
 </head>
 <body ng-app="demo" ng-controller="demoController">
 <div class="page">
+	<!-- Some slight abuse of bootstrap -->
 	<div class="container">
 		<h1 ng-bind="model.title" id="title"></h1>
 	</div>
-	<!-- The "timeline" attribute specifies the name of the factory that     -->
-	<!-- provides the adapter to use.  The provided name has TimelineAdapter -->
-	<!-- appended to it, to produce the name of the factory.  This example   -->
-	<!-- factory is found in the associated script (etv-adapter.js)          -->
 	<div timeline="ETV" timeline-open-item="openItem(item);" id="timeline-container"></div>
-	<!-- The viewer can be used without the timeline widget, so the little   -->
-	<!-- white arrow in the bottom of the timeline should be separate to     -->
-	<!-- both components.  Maybe create a super-component which contains the -->
-	<!-- timeline, viewer, and the white arrow? TODO                         -->
 	<div class="toggle-arrow-container">
 		<div class="toggle-arrow" ng-show="!!model.show" ng-click="model.showViewer = !model.showViewer"></div>
 	</div>
-	<!-- The show viewer -->
 	<div class="container">
 		<div show-viewer="model.show" ng-show="model.showViewer" class="show-viewer-container"></div>
 	</div>

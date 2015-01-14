@@ -2,37 +2,21 @@
 	'use strict';
 
 	/*
-	 * Define a *TimelineAdapter factory in your application then tell the timeline
-	 * to use it by setting the value of the timeline attribute to *.
-	 *
-	 * The API endpoint takes the following format:
-	 *
-	 * GET endpoint?year=YYYY&month=MM&day=DD
-	 *
-	 * The server responds with an array of items (shows) which are then
-	 * transformed by the mapItem function.
-	 *
-	 * i.e: items = httpGet(endpoint?year=YYYY&month=MM&day=DD).map(mapItem)
-	 *
-	 * Demo'ing this requires your browser to have CORS checks disabled unless
-	 * you run it from the live domain.
-	 *
-	 * For chrome/chromium: --disable-web-security
+	 * See etv-adapter in timeline demos folder
 	 */
 	angular.module('demo')
+		.value('ETVEndpoint', 'http://etv.err.ee/api/loader')
 		.value('languageId', 0)
 		.factory('ETVTimelineAdapter', ETVTimelineAdapter)
+		.factory('ETVShowViewerAdapter', ETVShowViewerAdapter)
 		;
 
-	function ETVTimelineAdapter($http, $sce, languageId) {
-		var endpoint = 'http://etv.err.ee/api/loader';
+	function ETVTimelineAdapter(ETVEndpoint) {
 		return {
 			/* URL to get timeline items per day */
-			endpoint: endpoint + '/GetTimelineDay',
+			endpoint: ETVEndpoint + '/GetTimelineDay',
 			/* Applied to each retrieved timeline item to map it to the view's format */
 			mapItem: mapItem,
-			/* Used to get info about an item for use by the show viewer */
-			getDetails: getDetails
 		};
 
 		function mapItem(item) {
@@ -62,13 +46,20 @@
 					'?width=600&height=600&mode=crop&quality=75';
 			}
 		}
+	}
+
+	function ETVShowViewerAdapter($http, $sce, languageId, ETVEndpoint) {
+
+		return {
+			getDetails: getDetails
+		};
 
 		/* Map show item (backend format) to show-viewer format */
 		function getDetails(item) {
 			if (item.Id.match(/^[0\-]+$/)) {
 				return new ShowData(item);
 			} else {
-				return $http.get(endpoint + '/GetTimelineContent/' + item.Id)
+				return $http.get(ETVEndpoint + '/GetTimelineContent/' + item.Id)
 					.then(function (response) {
 						return new ShowData(item, response.data);
 					});
@@ -140,9 +131,8 @@
 							'mediamode=wowzavideo',
 							'width=100',
 							/* 'site=' + window.location.host, */
-							'image=' + show.image + '?width=752'
+							'image=' + show.image
 						].join('&');
-					/* console.log(_.object(url.split('&').map(function (s) { return s.split('='); }))); */
 					return $sce.trustAsResourceUrl(url);
 				}
 

@@ -29,7 +29,7 @@
 	angular.module('demo', ['battlesnake.show-viewer'])
 		.controller('demoController', demoController);
 
-	function demoController($scope, $http, $q, ETVTimelineAdapter) {
+	function demoController($scope, $http, $q, ETVTimelineAdapter, ETVShowViewerAdapter) {
 		$scope.model = {
 			title: 'Show viewer demo',
 			shows: null,
@@ -37,7 +37,7 @@
 		};
 		var request = {
 			method: 'GET',
-			url: 'http://etv.err.ee/api/loader/GetTimelineDay',
+			url: ETVTimelineAdapter.endpoint,
 			params: {
 				year: moment().year(),
 				month: moment().month() + 1,
@@ -52,7 +52,7 @@
 		return;
 
 		function loadShows(data, status) {
-			$q.all(data.map(ETVTimelineAdapter.getDetails))
+			$q.all(data.map(ETVShowViewerAdapter.getDetails))
 				.then(function (shows) {
 					$scope.model.shows = _(shows).filter(todayPredicate).sort(showComparator);
 					var reversed = [].slice.apply($scope.model.shows);
