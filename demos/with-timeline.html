@@ -79,9 +79,6 @@ body {
 	font-family: sans-serif;
 	margin: 0px;
 }
-h1 {
-	margin: 60px;
-}
 .toggle-arrow {
 	display: block;
 	overflow: visible;
@@ -94,31 +91,64 @@ h1 {
 	border-right: 20px solid transparent;
 	border-bottom: 20px solid white;
 }
+.toggle-arrow-container {
+	height: 0;
+	overflow: visible;
+	position: relative;
+	border: 0;
+	box-shadow: none;
+	box-sizing: border-box;
+}
+.page>* {
+	margin: 0 auto;
+	width: 900px;
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+	box-shadow: 0px 0px 12px 3px rgba(90, 90, 90, 0.5);
+	box-sizing: border-box;
+}
+.page>*:first-child {
+	margin-top: 60px;
+	padding: 60px;
+	border-top: 1px solid #aaa;
+}
+.page>*:last-child {
+	border-bottom: 1px solid #aaa;
+}
+.page>.timeline-container {
+	width: auto;
+	border: 0;
+}
 </style>
 </head>
 <body ng-app="demo" ng-controller="demoController">
-	<h1 ng-bind="model.title"></h1>
+<div class="page">
+	<h1 ng-bind="model.title" class="title"></h1>
 	<!-- The "timeline" attribute specifies the name of the factory that     -->
 	<!-- provides the adapter to use.  The provided name has TimelineAdapter -->
 	<!-- appended to it, to produce the name of the factory.  This example   -->
 	<!-- factory is found in the associated script (etv-adapter.js)          -->
-	<div timeline="ETV" timeline-open-item="openItem(item);"></div>
+	<div timeline="ETV" timeline-open-item="openItem(item);" class="timeline-container"></div>
 	<!-- The viewer can be used without the timeline widget, so the little   -->
 	<!-- white arrow in the bottom of the timeline should be separate to     -->
 	<!-- both components.  Maybe create a super-component which contains the -->
 	<!-- timeline, viewer, and the white arrow? TODO                         -->
-	<div style="height: 0; overflow: visible; position: relative;">
+	<div class="toggle-arrow-container">
 		<div class="toggle-arrow" ng-show="!!model.show" ng-click="model.showViewer = !model.showViewer"></div>
 	</div>
 	<!-- The show viewer                                                     -->
-	<div show-viewer="model.show" ng-show="model.showViewer" style="margin: 0 auto; width: 900px; min-width: 900px; max-width: 900px; border: 1px solid #aaa; border-top: 0; box-shadow: 0px 0px 12px 3px rgba(90, 90, 90, 0.5);"></div>
+	<div show-viewer="model.show" ng-show="model.showViewer" class="show-viewer-container"></div>
 	<!-- That's all there is to it! -->
+</div>
+<div>
 	<p style="margin: 2em auto 1em; max-width: 600px; line-height: 1.7em;">
-		<strong>NOTE:</strong> Since we are using the err.ee api from outside the
-		err.ee domain, your browser will block the XHRs due to CORS. To disable
-		CORS in chrome or chromium, launch it with the
-		<b>--disable-web-security</b> command-line parameter. The demos will not
-		work otherwise. There is no reliable way to disable CORS in Firefox.
+		<strong>NOTE:</strong> Since we are using the err.ee api from
+		outside the err.ee domain, your browser will block the XHRs due to
+		CORS. To disable CORS in chrome or chromium, launch it with the
+		<b>--disable-web-security</b> command-line parameter. The demos will
+		not work otherwise. There is no reliable way to disable CORS in
+		Firefox.
 	</p>
+</div>
 </body>
 </html>
