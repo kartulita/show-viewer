@@ -54,10 +54,13 @@
 		function loadShows(data, status) {
 			$q.all(data.map(ETVShowViewerAdapter.getDetails))
 				.then(function (shows) {
-					$scope.model.shows = _(shows).filter(todayPredicate).sort(showComparator);
-					var reversed = [].slice.apply($scope.model.shows);
-					reversed.reverse();
-					$scope.model.show = _(reversed).find(function (show) { return show.start.unix() < moment().unix() });
+					$scope.model.shows = _(shows)
+						.filter(todayPredicate)
+						.sort(showComparator);
+					$scope.model.show = _([].slice.apply($scope.model.shows).reverse())
+						.find(function (show) {
+							return show.start.unix() < moment().unix()
+						});
 				});
 		}
 
@@ -69,18 +72,6 @@
 			return a.start.unix() - b.start.unix();
 		}
 
-		function mapShow(data) {
-			return {
-				title: data.HeaderLong || data.Header,
-				image: data.Image,
-				description: data.Lead,
-				start: moment(data.Published),
-				hasAudio: data.hasAudio,
-				hasVideo: data.hasVideo,
-				mainUrl: '#',
-				channelUrl: '#'
-			};
-		}
 	}
 
 })(window.angular);

@@ -72,7 +72,7 @@
 				this.title = getText(contentData.Texts, baseData.HeaderLong || baseData.Header, 'Header');
 				this.image = getImage(contentData.Image || baseData.Image);
 				this.description = $sce.trustAsHtml(getText(contentData.Texts, baseData.Lead, 'Lead'));
-				this.start = moment(contentData.Published || contentData.Created || baseData.Published),
+				this.start = moment(baseData.Published || contentData.Published || contentData.Created),
 				/* TODO: GetCategoryUrlForPrimaryCategory */
 				this.categoryUrl = contentData.PrimaryCategoryId;
 				this.targetUrl = contentData.Url;
