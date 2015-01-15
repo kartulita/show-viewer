@@ -29,30 +29,49 @@
 	angular.module('demo', ['battlesnake.show-viewer'])
 		.controller('demoController', demoController);
 
-	function demoController($scope, $http, $q, ETVTimelineAdapter, ETVShowViewerAdapter) {
+	function demoController($scope, $http, $q, ERRShowViewerAdapterFactory, ETVEndpoint, R2Endpoint) {
 		$scope.model = {
 			title: 'Show viewer demo',
 			shows: null,
-			show: null
+			show: null,
+			adapter: null
 		};
-		var request = {
-			method: 'GET',
-			url: ETVTimelineAdapter.endpoint,
-			params: {
-				year: moment().year(),
-				month: moment().month() + 1,
-				day: moment().date()
+		$scope.adapters = [
+			{
+				name: 'ETV',
+				showViewer: ERRShowViewerAdapterFactory(ETVEndpoint, 0)
+			},
+			{
+				name: 'R2',
+				showViewer: ERRShowViewerAdapterFactory(R2Endpoint, 0)
 			}
-		}
-		$scope.showListItem = function (show) {
-			return show.start.format('HH:mm') + ': ' + show.title;
-		};
-
-		$http(request).success(loadShows);
+		];
+		$scope.reloadShows = reloadShows;
+		$scope.model.adapter = $scope.adapters[0];
+		reloadShows();
 		return;
 
+		function reloadShows() {
+			$scope.model.shows = null;
+			$scope.model.show = null;
+			var request = {
+				method: 'GET',
+				url: $scope.model.adapter.showViewer.endpoint + '/GetTimelineDay',
+				params: {
+					year: moment().year(),
+					month: moment().month() + 1,
+					day: moment().date()
+				}
+			}
+			$scope.showListItem = function (show) {
+				return show.start.format('HH:mm') + ': ' + show.title;
+			};
+
+			$http(request).success(loadShows);
+		}
+
 		function loadShows(data, status) {
-			$q.all(data.map(ETVShowViewerAdapter.getDetails))
+			$q.all(data.map($scope.model.adapter.showViewer.getDetails))
 				.then(function (shows) {
 					$scope.model.shows = _(shows)
 						.filter(todayPredicate)
@@ -78,7 +97,8 @@
 </script>
 <!-- Underscore required by adapter -->
 <script src="../bower_components/underscore/underscore-min.js"></script>
-<script src="etv-adapter.js"></script>
+<script src="err-endpoints.js"></script>
+<script src="err-show-viewer-adapter.js"></script>
 <style>
 body {
 	font-family: sans-serif;
@@ -96,6 +116,7 @@ body {
 <body ng-app="demo" ng-controller="demoController">
 	<div class="main container">
 		<h1 ng-bind="model.title" class="row"></h1>
+		<select ng-options="adapter as adapter.name for adapter in adapters" ng-model="model.adapter" ng-change="reloadShows()"></select>
 		<select ng-options="show as showListItem(show) for show in model.shows" ng-model="model.show" id="show-chooser" class="row"></select>
 		<!-- The show viewer -->
 		<div show-viewer="model.show" id="show-viewer" class="row"></div>
