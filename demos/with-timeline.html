@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="http://etv.err.ee/Content/less/theme/etv/bootstrap.less">
 <!-- CSS for the timeline -->
 <link rel="stylesheet" href="../../timeline/bower_components/fontawesome/css/font-awesome.css">
-<link rel="stylesheet" href="../../timeline/style.css">
+<link rel="stylesheet/less" href="../../timeline/style.less" type="text/css">
+<script src="../bower_components/less/dist/less.min.js"></script>
 <!-- Show viewer timeline -->
 <link rel="stylesheet" href="../style.css">
 <!-- Dependencies (remember to `bower install` in the module folder before   -->
@@ -74,6 +75,7 @@
 body {
 	font-family: sans-serif;
 	margin: 60px 0;
+	overflow-y: scroll;
 }
 .toggle-arrow {
 	display: block;
@@ -125,7 +127,7 @@ body {
 	<div class="container">
 		<h1 ng-bind="model.title" id="title"></h1>
 	</div>
-	<div timeline="ETV" timeline-open-item="openItem(item);" id="timeline-container"></div>
+	<div timeline="ETV" timeline-open-item="openItem(item);" id="timeline-container" class="kartulita"></div>
 	<div class="toggle-arrow-container">
 		<div class="toggle-arrow" ng-show="!!model.show" ng-click="model.showViewer = !model.showViewer"></div>
 	</div>
