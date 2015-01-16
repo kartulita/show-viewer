@@ -8,11 +8,11 @@
 <!-- CSS for the timeline -->
 <link rel="stylesheet" href="../../timeline/bower_components/fontawesome/css/font-awesome.css">
 <link rel="stylesheet/less" href="../../timeline/style.less" type="text/css">
-<script src="../bower_components/less/dist/less.min.js"></script>
 <!-- Show viewer timeline -->
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet/less" href="../style.less" type="text/css">
 <!-- Dependencies (remember to `bower install` in the module folder before   -->
 <!-- running this demo                                                       -->
+<script src="../bower_components/less/dist/less.min.js"></script>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../bower_components/moment/min/moment-with-locales.min.js"></script>
 <script src="../bower_components/angular/angular.min.js"></script>
@@ -163,7 +163,7 @@ body {
 		<div class="toggle-arrow" ng-show="!!model.show" ng-click="model.showViewer = !model.showViewer"></div>
 	</div>
 	<div class="container">
-		<div show-viewer="model.show" ng-show="model.showViewer" class="show-viewer-container"></div>
+		<div show-viewer="model.show" ng-show="model.showViewer" class="kartulita show-viewer-container"></div>
 	</div>
 	<!-- That's all there is to it! -->
 </div>

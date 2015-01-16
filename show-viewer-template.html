@@ -2,12 +2,12 @@
 <div class="show-viewer row">
 	<div class="span6" ng-if="show.media || show.image">
 		<div class="show-media">
-			<img ng-if="show.image && !show.media" ng-src="{{ show.image }}" width="100%">
+			<img ng-if="show.image && !show.media" class="show-media-image" ng-src="{{ show.image }}" width="100%">
 			<div class="show-media-live-container" ng-if="activeSource">
 				<iframe ng-src="{{ activeSource }}" class="show-media-live" scrolling="no"></iframe>
 			</div>
 			<div class="show-media-sources" ng-if="show.media.sources.length > 1">
-				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-bind="'#' + ($index + 1)" ng-click="selectSource(source)"></a>
+				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-bind="'#' + ($index + 1)" ng-click="selectSource(source)" href="javascript://"></a>
 			</div>
 		</div>
 	</div>

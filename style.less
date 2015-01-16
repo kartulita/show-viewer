@@ -1,3 +1,5 @@
+.kartulita {
+
 .show-viewer.collapsed {
 	display: none;
 }
@@ -26,31 +28,37 @@
 	overflow: hidden;
 }
 
-.show-viewer img {
+.show-viewer .show-media-image {
 	width: 100%;
 }
 
 .show-viewer .show-media-sources {
 	display: block;
-	padding-top: 6px;
 }
 
 .show-viewer .show-media-source {
-	border: 2px solid #bbb;
-	color : #bbb;
 	display: inline-block;
-	width: 65px;
-	padding: 4px;
+	width: 45px;
 	transition: none;
 }
 
-.show-viewer .show-media-source.selected {
-	border-color: #f69cbd;
-	color: #f69cbd;
+.show-viewer .show-media-source {
+	margin: 4px 0 4px 4px;
+	padding: 4px;
+	display: inline-block;
+	color: #999;
+	background: #e4e4e4;
 	transition: all 200ms ease;
+	text-align: center;
 }
 
 .show-viewer .show-media-source:hover {
-	border-color: #ea297a;
-	color: #ea297a;
+	background: #ddd;
+}
+
+.show-viewer .show-media-source.selected {
+	background: #aaa;
+	color: #555;
+}
+
 }

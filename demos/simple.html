@@ -119,7 +119,7 @@ body {
 		<select ng-options="adapter as adapter.name for adapter in adapters" ng-model="model.adapter" ng-change="reloadShows()"></select>
 		<select ng-options="show as showListItem(show) for show in model.shows" ng-model="model.show" id="show-chooser" class="row"></select>
 		<!-- The show viewer -->
-		<div show-viewer="model.show" id="show-viewer" class="row"></div>
+		<div show-viewer="model.show" id="show-viewer" class="kartulita row"></div>
 		<!-- That's all there is to it! -->
 	</div>
 	<p style="margin: 60px auto 1em; max-width: 600px; line-height: 1.7em;">
