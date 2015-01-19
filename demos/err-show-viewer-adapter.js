@@ -13,17 +13,18 @@
 		return getAdapter;
 		
 		function getAdapter(endpoint, languageIndex) {
-			return {
-				endpoint: endpoint,
+			var result = {
+				endpoint: endpoint + '/loader/GetTimelineContent',
 				getDetails: getDetails
 			};
+			return result;
 
 			/* Map show item (backend format) to show-viewer format */
 			function getDetails(item) {
 				if (item.Id.match(/^[0\-]+$/)) {
 					return new ShowData(item);
 				} else {
-					return $http.get(endpoint + '/GetTimelineContent/' + item.Id)
+					return $http.get(result.endpoint + '/' + item.Id)
 						.then(function (response) {
 							return new ShowData(item, response.data);
 						});

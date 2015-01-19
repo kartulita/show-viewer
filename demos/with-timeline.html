@@ -60,13 +60,14 @@
 	angular.module('demo', ['battlesnake.show-viewer', 'battlesnake.timeline'])
 		.controller('demoController', demoController);
 
-	function demoController($scope, ERRTimelineAdapterFactory, ERRShowViewerAdapterFactory, ETVEndpoint, R2Endpoint) {
+	function demoController($scope, ERRTimelineAdapterFactory, ERRShowViewerAdapterFactory, ETVEndpoint, R2Endpoint, ERRNowPlayingAdapter, $timeout) {
 		$scope.model = {
 			title: 'Show viewer demo with timeline binding',
 			showViewer: false,
 			show: null,
 			lastItem: null,
-			adapter: null
+			adapter: null,
+			nowPlaying: null
 		};
 		$scope.adapters = [
 			{
@@ -77,12 +78,15 @@
 			{
 				name: 'R2',
 				timeline: ERRTimelineAdapterFactory(R2Endpoint),
-				showViewer: ERRShowViewerAdapterFactory(R2Endpoint)
+				showViewer: ERRShowViewerAdapterFactory(R2Endpoint),
+				nowPlaying: ERRNowPlayingAdapter(R2Endpoint, 'raadio2')
 			}
 		];
 		$scope.model.adapter = $scope.adapters[0];
 		$scope.openItem = openItem;
 		$scope.changeChannel = changeChannel;
+		var nowPlayingTimer = null;
+		changeChannel();
 		return;
 		
 		function openItem(item) {
@@ -104,6 +108,24 @@
 			$scope.model.lastItem = null;
 			$scope.model.showViewer = false;
 			$scope.model.show = null;
+			$timeout.cancel(nowPlayingTimer);
+			updateNowPlaying();
+		}
+
+		function updateNowPlaying() {
+			var adapter = $scope.model.adapter;
+			if (!adapter.nowPlaying) {
+				return;
+			}
+			adapter.nowPlaying(showNowPlaying);
+			return;
+
+			function showNowPlaying(result) {
+				result = result.replace(/^\s+|\s+$|^nulL$/g, '');
+				var changed = $scope.model.nowPlaying !== result;
+				$scope.model.nowPlaying = result;
+				nowPlayingTimer = $timeout(updateNowPlaying, changed ? 30000 : 5000);
+			}
 		}
 	}
 
@@ -111,6 +133,7 @@
 </script>
 <script src="demos/err-endpoints.js"></script>
 <script src="demos/err-show-viewer-adapter.js"></script>
+<script src="../timeline/demos/err-now-playing-adapter.js"></script>
 <script src="../timeline/demos/err-timeline-adapter.js"></script>
 <style>
 body {
