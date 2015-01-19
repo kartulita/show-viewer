@@ -1,42 +1,57 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="demo">
 <head>
 <title>Show viewer demo</title>
 <meta charset="utf8">
+<base href="../">
 <!-- ETV stylesheet -->
 <link rel="stylesheet" href="http://etv.err.ee/Content/less/theme/etv/bootstrap.less">
 <!-- CSS for the timeline -->
-<link rel="stylesheet" href="../../timeline/bower_components/fontawesome/css/font-awesome.css">
-<link rel="stylesheet/less" href="../../timeline/style.less" type="text/css">
+<link rel="stylesheet" href="../timeline/bower_components/fontawesome/css/font-awesome.css">
+<link rel="stylesheet/less" href="../timeline/style.less" type="text/css">
 <!-- Show viewer timeline -->
-<link rel="stylesheet/less" href="../style.less" type="text/css">
+<link rel="stylesheet/less" href="style.less" type="text/css">
 <!-- Dependencies (remember to `bower install` in the module folder before   -->
 <!-- running this demo                                                       -->
-<script src="../bower_components/less/dist/less.min.js"></script>
-<script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../bower_components/moment/min/moment-with-locales.min.js"></script>
-<script src="../bower_components/angular/angular.min.js"></script>
-<script src="../../timeline/bower_components/underscore/underscore-min.js"></script>
-<script src="../../timeline/bower_components/angular-touch/angular-touch.min.js"></script>
-<script src="../../timeline/bower_components/hamsterjs/hamster.js"></script>
-<script src="../../timeline/bower_components/angular-mousewheel/mousewheel.js"></script>
+<script src="bower_components/less/dist/less.min.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/moment/min/moment-with-locales.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="../timeline/bower_components/underscore/underscore-min.js"></script>
+<script src="../timeline/bower_components/angular-touch/angular-touch.min.js"></script>
+<script src="../timeline/bower_components/hamsterjs/hamster.js"></script>
+<script src="../timeline/bower_components/angular-mousewheel/mousewheel.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- For debugging purposes, I include each script explicitly.               -->
 <!-- In production, you would ng-annotate=>concatenate=>uglify the scripts   -->
 <!-- to produce one small bundle script                                      -->
 <!-- Timeline: -->
-<script src="../../timeline/module.js"></script>
-<script src="../../timeline/timeline-service.js"></script>
-<script src="../../timeline/timeline-filters.js"></script>
-<script src="../../timeline/timeline-template.js"></script>
-<script src="../../timeline/timeline-controller.js"></script>
-<script src="../../timeline/timeline-directive.js"></script>
-<script src="../../timeline/days-directive.js"></script>
-<script src="../../timeline/day-directive.js"></script>
-<script src="../../timeline/items-directive.js"></script>
+<script src="../timeline/module.js"></script>
+<script>
+	/*
+	 * This synchronous template GET is not required if you use the bundled form
+	 * of the timeline plugin
+	 */
+	angular.module('battlesnake.timeline')
+		.run(function ($templateCache) {
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', '../timeline/timeline-template.html', false);
+			xhr.send();
+			$templateCache.put('timeline-template.html', xhr.responseText);
+		});
+</script>
+<script src="../timeline/timeline-service.js"></script>
+<script src="../timeline/timeline-filters.js"></script>
+<script src="../timeline/timeline-controller.js"></script>
+<script src="../timeline/timeline-directive.js"></script>
+<script src="../timeline/days-directive.js"></script>
+<script src="../timeline/day-directive.js"></script>
+<script src="../timeline/items-directive.js"></script>
 <!-- Show viewer: -->
-<script src="../module.js"></script>
-<script src="../show-viewer-directive.js"></script>
-<script src="../show-viewer-filters.js"></script>
+<script src="module.js"></script>
+<script src="show-viewer-directive.js"></script>
+<script src="show-viewer-filters.js"></script>
 <!-- Our demo script -->
 <script>
 (function (angular) {
@@ -94,9 +109,9 @@
 
 })(window.angular);
 </script>
-<script src="../../timeline/demos/err-timeline-adapter.js"></script>
-<script src="err-endpoints.js"></script>
-<script src="err-show-viewer-adapter.js"></script>
+<script src="demos/err-endpoints.js"></script>
+<script src="demos/err-show-viewer-adapter.js"></script>
+<script src="../timeline/demos/err-timeline-adapter.js"></script>
 <style>
 body {
 	font-family: sans-serif;
@@ -148,7 +163,7 @@ body {
 }
 </style>
 </head>
-<body ng-app="demo" ng-controller="demoController">
+<body ng-controller="demoController">
 <div class="page">
 	<!-- Some slight abuse of bootstrap -->
 	<div class="container header">

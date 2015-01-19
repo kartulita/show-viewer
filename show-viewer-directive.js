@@ -10,7 +10,7 @@
 			scope: {
 				show: '=showViewer',
 			},
-			templateUrl: '../show-viewer-template.html',
+			templateUrl: 'show-viewer-template.html',
 			link: link
 		};
 

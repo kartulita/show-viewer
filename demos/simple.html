@@ -3,22 +3,24 @@
 <head>
 <title>Show viewer demo</title>
 <meta charset="utf8">
+<base href="../">
 <!-- ETV stylesheet -->
 <link rel="stylesheet" href="http://etv.err.ee/Content/less/theme/etv/bootstrap.less">
 <!-- Show viewer timeline -->
-<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet/less" href="style.less" type="text/css">
 <!-- Dependencies (remember to `bower install` in the module folder before   -->
 <!-- running this demo                                                       -->
-<script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="../bower_components/moment/min/moment-with-locales.min.js"></script>
-<script src="../bower_components/angular/angular.min.js"></script>
+<script src="bower_components/less/dist/less.min.js"></script>
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/moment/min/moment-with-locales.min.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
 <!-- For debugging purposes, I include each script explicitly.               -->
 <!-- In production, you would ng-annotate=>concatenate=>uglify the scripts   -->
 <!-- to produce one small bundle script                                      -->
 <!-- Show viewer: -->
-<script src="../module.js"></script>
-<script src="../show-viewer-directive.js"></script>
-<script src="../show-viewer-filters.js"></script>
+<script src="module.js"></script>
+<script src="show-viewer-directive.js"></script>
+<script src="show-viewer-filters.js"></script>
 <!-- This script defines our angular application.  Its main purpose is to    -->
 <!-- reference the battlesnake.timeline module, so that our timeline         -->
 <!-- directive is recognised.                                                -->
@@ -96,9 +98,9 @@
 })(window.angular);
 </script>
 <!-- Underscore required by adapter -->
-<script src="../bower_components/underscore/underscore-min.js"></script>
-<script src="err-endpoints.js"></script>
-<script src="err-show-viewer-adapter.js"></script>
+<script src="bower_components/underscore/underscore-min.js"></script>
+<script src="demos/err-endpoints.js"></script>
+<script src="demos/err-show-viewer-adapter.js"></script>
 <style>
 body {
 	font-family: sans-serif;
