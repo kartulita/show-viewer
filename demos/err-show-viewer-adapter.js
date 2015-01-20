@@ -12,9 +12,9 @@
 
 		return getAdapter;
 		
-		function getAdapter(endpoint, languageIndex) {
+		function getAdapter(api, languageIndex) {
 			var result = {
-				endpoint: endpoint + '/loader/GetTimelineContent',
+				endpoint: api + '/loader/GetTimelineContent',
 				getDetails: getDetails
 			};
 			return result;
