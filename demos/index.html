@@ -6,47 +6,43 @@
 <base href="../">
 <!-- ETV stylesheet -->
 <link rel="stylesheet" href="http://etv.err.ee/Content/less/theme/etv/bootstrap.less">
-<!-- Show viewer timeline -->
-<link rel="stylesheet/less" href="style.less" type="text/css">
-<!-- Dependencies (remember to `bower install` in the module folder before   -->
-<!-- running this demo                                                       -->
-<script src="bower_components/less/dist/less.min.js"></script>
+<!-- Dependencies -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <script src="bower_components/moment/min/moment-with-locales.min.js"></script>
 <script src="bower_components/angular/angular.min.js"></script>
-<!-- Show viewer: -->
+<script src="bower_components/underscore/underscore-min.js"></script>
+<!-- Show viewer -->
+<link rel="stylesheet/less" href="style.less" type="text/css">
 <script src="module.js"></script>
 <script src="show-viewer-directive.js"></script>
 <script src="show-viewer-filters.js"></script>
-<!-- This script defines our angular application.  Its main purpose is to    -->
-<!-- reference the battlesnake.timeline module, so that our timeline         -->
-<!-- directive is recognised.                                                -->
+<!-- Apis -->
+<script src="../err/module.js"></script>
+<script src="../err/apis.js"></script>
+<script src="../err/show-viewer-adapter.js"></script>
+<script src="../err/timeline-adapter.js"></script>
+<!-- Demo -->
 <script>
 (function (angular) {
 	'use strict';
 
-	angular.module('demo', ['battlesnake.show-viewer'])
+	angular.module('demo', ['battlesnake.show-viewer', 'battlesnake.err'])
 		.controller('demoController', demoController);
 
-	function demoController($scope, $http, $q, ERRShowViewerAdapterFactory, ETV_api, R2_api) {
+	function demoController($scope, $q, showViewerAdapterFactory, timelineAdapterFactory, scheduleApi) {
+		$scope.adapters = _(scheduleApi).map(function (api, name) {
+			return {
+				name: name,
+				showViewer: showViewerAdapterFactory(api),
+				timeline: timelineAdapterFactory(api)
+			};
+		});
 		$scope.model = {
 			title: 'Show viewer demo',
 			shows: null,
 			show: null,
 			adapter: null
 		};
-		$scope.adapters = [
-			{
-				name: 'ETV',
-				showViewer: ERRShowViewerAdapterFactory(ETV_api, 0),
-				api: ETV_api
-			},
-			{
-				name: 'R2',
-				showViewer: ERRShowViewerAdapterFactory(R2_api, 0),
-				api: R2_api
-			}
-		];
 		$scope.reloadShows = reloadShows;
 		$scope.model.adapter = $scope.adapters[0];
 		reloadShows();
@@ -55,24 +51,15 @@
 		function reloadShows() {
 			$scope.model.shows = null;
 			$scope.model.show = null;
-			var request = {
-				method: 'GET',
-				url: $scope.model.adapter.api + '/loader/GetTimelineDay',
-				params: {
-					year: moment().year(),
-					month: moment().month() + 1,
-					day: moment().date()
-				}
-			}
 			$scope.showListItem = function (show) {
 				return show.start.format('HH:mm') + ': ' + show.title;
 			};
-
-			$http(request).success(loadShows);
+			$scope.model.adapter.timeline.getDay(moment())
+				.then(loadShows);
 		}
 
-		function loadShows(data, status) {
-			$q.all(data.map($scope.model.adapter.showViewer.getDetails))
+		function loadShows(data) {
+			$q.all(_(data).chain().pluck('itemData').map($scope.model.adapter.showViewer.getDetails).value())
 				.then(function (shows) {
 					$scope.model.shows = _(shows)
 						.filter(todayPredicate)
@@ -96,10 +83,6 @@
 
 })(window.angular);
 </script>
-<!-- Underscore required by adapter -->
-<script src="bower_components/underscore/underscore-min.js"></script>
-<script src="demos/err-api.js"></script>
-<script src="demos/err-show-viewer-adapter.js"></script>
 <style>
 body {
 	font-family: sans-serif;
@@ -131,4 +114,5 @@ body {
 		work otherwise. There is no reliable way to disable CORS in Firefox.
 	</p>
 </body>
+<script src="bower_components/less/dist/less.min.js"></script>
 </html>
