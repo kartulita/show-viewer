@@ -3,15 +3,10 @@
 
 	/**
 	 * @ngdoc module
-	 * @name battlesnake.timeline
-	 * @requires moment
-	 * @requires jquery
+	 * @name show-viewer
 	 *
 	 * @description
-	 * Helper for timeline widget, allows viewing of shows
-	 *
-	 * @example
-	 * See ../timeline/demos/etv.html
+	 * Displays information about shows and allows viewing/streaming
 	 */
 	angular.module('battlesnake.show-viewer', []);
 
