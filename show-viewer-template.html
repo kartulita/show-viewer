@@ -1,4 +1,4 @@
-<!-- Uses bootstrap -->
+<!-- (Ab)Uses bootstrap -->
 <div class="show-viewer row">
 	<div class="span6" ng-if="show.media || show.image">
 		<div class="show-media">
@@ -18,8 +18,14 @@
 				<div class="show-timestamp timestamp" ng-bind="show.start | showViewerDateTime"></div>
 			</div>
 			<div class="show-description lead" ng-bind-html="show.description"></div>
-			<a ng-if="show.categoryUrl" ng-href="{{ show.categoryUrl }}" class="show-category-link marker-more">Saatsesarja kodulehele</a>
+			<a ng-if="show.categoryUrl" ng-href="{{ show.categoryUrl }}" class="show-category-link marker-more">Saatesarja kodulehele</a>
 			<a ng-if="show.channelUrl" ng-href="{{ show.channelUrl }}" class="show-channel-link" target="_blank">Ava uues aknas</a>
+		</div>
+		<div class="media-formats" ng-if="show.media.formats">
+			<div class="category">Alternativiised kuulamise variandid</div>
+			<a class="format" ng-repeat="format in show.media.formats" ng-href="{{ format.url }}">
+				{{ format.codec }} {{ format.bitrate }}K
+			</a>
 		</div>
 	</div>
 </div>
