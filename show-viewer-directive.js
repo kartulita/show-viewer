@@ -4,7 +4,7 @@
 	angular.module('battlesnake.show-viewer')
 		.directive('showViewer', showViewerDirective);
 
-	function showViewerDirective() {
+	function showViewerDirective(languageService, showViewerLocale) {
 		return {
 			restrict: 'A',
 			scope: {
@@ -15,6 +15,7 @@
 		};
 
 		function link(scope, element, attrs) {
+			scope.strings = languageService(showViewerLocale);
 			scope.selectSource = selectSource;
 			scope.$watch('show', showChanged);
 			return;

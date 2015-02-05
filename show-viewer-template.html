@@ -1,4 +1,7 @@
-<!-- (Ab)Uses bootstrap -->
+<!-- (Ab)uses bootstrap -->
+<!-- Since partial bootstrap use is essentially coupling this to the parent  -->
+<!-- layout, we should draw up some consistent standard for bootstrap use    -->
+<!-- throughout the project, which would simplify other components a bit     -->
 <div class="show-viewer row">
 	<div class="span6" ng-if="show.media || show.image">
 		<div class="show-media">
@@ -18,12 +21,22 @@
 				<div class="show-timestamp timestamp" ng-bind="show.start | showViewerDateTime"></div>
 			</div>
 			<div class="show-description lead" ng-bind-html="show.description"></div>
-			<a ng-if="show.categoryUrl" ng-href="{{ show.categoryUrl }}" class="show-category-link marker-more">Saatesarja kodulehele</a>
-			<a ng-if="show.channelUrl" ng-href="{{ show.channelUrl }}" class="show-channel-link" target="_blank">Ava uues aknas</a>
+			<div class="show-category-link">
+				<a ng-if="show.categoryUrl" ng-href="{{ show.categoryUrl }}" class="marker-more">
+					{{ strings('programmeHomepage') }}
+				</a>
+			</div>
+			<div class="show-channel-link">
+				<a ng-if="show.channelUrl" ng-href="{{ show.channelUrl }}" target="_blank">
+					{{ strings('openInNewWindow') }}
+				</a>
+			</div>
 		</div>
 		<div class="media-formats" ng-if="show.media.formats">
-			<div class="category">Alternativiised kuulamise variandid</div>
-			<a class="format" ng-repeat="format in show.media.formats" ng-href="{{ format.url }}">
+			<div class="category">
+				{{ strings('alternativeListening') }}
+			</div>
+			<a class="format btn" ng-repeat="format in show.media.formats" ng-href="{{ format.url }}">
 				{{ format.codec }} {{ format.bitrate }}K
 			</a>
 		</div>
