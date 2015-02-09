@@ -8,17 +8,20 @@
 		this.en = {
 			openInNewWindow: 'Open in new window',
 			programmeHomepage: 'Programme page',
-			alternativeListening: 'Alternative listening options'
+			alternativeListening: 'Alternative listening options',
+			showPlaylist: 'Show playlist'
 		};
 		this.et = {
 			openInNewWindow: 'Ava uues aknas',
 			programmeHomepage: 'Saatesarja kodulehele',
-			alternativeListening: 'Alternatiivsed kuulamise variandid'
+			alternativeListening: 'Alternatiivsed kuulamise variandid',
+			showPlaylist: 'Näita lugusid'
 		};
 		this.ru = {
 			openInNewWindow: null,
 			programmeHomepage: null,
-			alternativeListening: null
+			alternativeListening: null,
+			showPlaylist: null
 		};
 	}
 

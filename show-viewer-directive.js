@@ -4,9 +4,11 @@
 	angular.module('battlesnake.show-viewer')
 		.directive('showViewer', showViewerDirective);
 
-	function showViewerDirective(languageService, showViewerLocale) {
+	function showViewerDirective() {
 		return {
 			restrict: 'A',
+			require: 'showViewer',
+			controller: 'showViewerController',
 			scope: {
 				show: '=showViewer',
 			},
@@ -14,24 +16,8 @@
 			link: link
 		};
 
-		function link(scope, element, attrs) {
-			scope.strings = languageService(showViewerLocale);
-			scope.selectSource = selectSource;
-			scope.$watch('show', showChanged);
-			return;
-
-			function showChanged() {
-				var show = scope.show;
-				if (show && show.media && show.media.sources && show.media.sources.length) {
-					selectSource(show.media.sources[0]);
-				} else {
-					scope.activeSource = null;
-				}
-			}
-
-			function selectSource(source) {
-				scope.activeSource = source;
-			}
+		function link(scope, element, attrs, controller) {
+			controller.init();
 		}
 	}
 

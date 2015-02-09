@@ -40,5 +40,21 @@
 				{{ format.codec }} {{ format.bitrate }}K
 			</a>
 		</div>
+		<div class="playlist-container" ng-if="show.playlist">
+			<label class="btn">
+				<input type="checkbox" class="playlist-toggle" ng-model="view.showPlaylist">
+				{{ strings('showPlaylist') }}
+			</label>
+			<div ng-if="view.showPlaylist" class="playlist">
+				<div class="playlist-item" ng-repeat="item in show.playlist.items">
+					<span class="playlist-field time timestamp-no-overflow-base bold" ng-if="item.time">
+						{{ item.time }}
+					</span>
+					<span class="playlist-field title">
+						{{ item.title }}
+					</span>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
