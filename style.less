@@ -59,8 +59,20 @@
 		}
 	}
 
+	.info-column>* {
+		margin-top: 16px;
+		margin-right: 16px;
+		margin-bottom: 16px;
+	}
+
 	.media-formats .format {
 		margin-bottom: 4px;
+		float: left;
+		width: 96px;
+		&:nth-child(2n) {
+			clear: left;
+			margin-left: 0;
+		}
 		&:after {
 			content: '\f130';
 			font-family: FontAwesome;
