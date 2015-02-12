@@ -21,13 +21,13 @@
 				<div class="show-timestamp timestamp" ng-bind="show.start | showViewerDateTime"></div>
 			</div>
 			<div class="show-description lead" ng-bind-html="show.description"></div>
-			<div class="show-category-link">
-				<a ng-if="show.categoryUrl" ng-href="{{ show.categoryUrl }}" class="marker-more">
+			<div class="show-category-link" ng-if="show.categoryUrl">
+				<a ng-href="{{ show.categoryUrl }}" class="marker-more">
 					{{ strings('programmeHomepage') }}
 				</a>
 			</div>
-			<div class="show-channel-link">
-				<a ng-if="show.channelUrl" ng-href="{{ show.channelUrl }}" target="_blank">
+			<div class="show-channel-link" ng-if="show.channelUrl && show.media.sources.length > 1">
+				<a ng-href="{{ show.channelUrl }}" target="_blank">
 					{{ strings('openInNewWindow') }}
 				</a>
 			</div>
