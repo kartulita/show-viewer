@@ -8,6 +8,6 @@
 	 * @description
 	 * Displays information about shows and allows viewing/streaming
 	 */
-	angular.module('battlesnake.show-viewer', ['battlesnake.language']);
+	angular.module('battlesnake.show-viewer', ['battlesnake.language', 'ui.bootstrap']);
 
 })(window.angular);

@@ -9,19 +9,22 @@
 			openInNewWindow: 'Open in new window',
 			programmeHomepage: 'Programme page',
 			alternativeListening: 'Alternative listening options',
-			showPlaylist: 'Show playlist'
+			showPlaylist: 'Show playlist',
+			download: 'Download'
 		};
 		this.et = {
 			openInNewWindow: 'Ava uues aknas',
 			programmeHomepage: 'Saatesarja kodulehele',
 			alternativeListening: 'Alternatiivsed kuulamise variandid',
-			showPlaylist: 'Näita lugusid'
+			showPlaylist: 'Näita lugusid',
+			download: 'Lae alla'
 		};
 		this.ru = {
 			openInNewWindow: null,
 			programmeHomepage: null,
 			alternativeListening: null,
-			showPlaylist: null
+			showPlaylist: null,
+			download: null
 		};
 	}
 

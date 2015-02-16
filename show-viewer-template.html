@@ -3,35 +3,81 @@
 <!-- layout, we should draw up some consistent standard for bootstrap use    -->
 <!-- throughout the project, which would simplify other components a bit     -->
 <div class="row show-viewer">
+	<!-- Show image/media viewer -->
 	<div class="span6 media-column" ng-if="show.media || show.image">
 		<div class="show-media">
-			<img ng-if="show.image && !show.media" class="show-media-image" ng-src="{{ show.image }}" width="100%">
+			<img ng-if="show.image && !show.media && !activeSource" class="show-media-image" ng-src="{{ show.image }}" width="100%">
 			<div class="show-media-live-container" ng-if="activeSource">
 				<iframe ng-src="{{ activeSource }}" class="show-media-live" scrolling="no"></iframe>
 			</div>
 			<div class="show-media-sources" ng-if="show.media.sources.length > 1">
-				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-bind="'#' + ($index + 1)" ng-click="selectSource(source)" href="javascript://"></a>
+				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-click="selectSource(source)" href="javascript://">
+					#{{ $index + 1 }}
+				</a>
 			</div>
 		</div>
 	</div>
+	<!-- Show info -->
 	<div class="span6 info-column">
 		<div class="show-info">
-			<a class="show-target-link" ng-href="{{ show.targetUrl }}"><h4 ng-bind="show.title" class="show-title"></h4></a>
+			<!-- Title -->
+			<a class="show-target-link" ng-href="{{ show.targetUrl }}">
+				<h4 class="show-title">
+					{{ show.title }}
+				</h4>
+			</a>
+			<!-- Start time -->
 			<div class="meta">
-				<div class="show-timestamp timestamp" ng-bind="show.start | showViewerDateTime"></div>
+				<div class="show-timestamp timestamp">
+					{{ show.start | showViewerDateTime }}
+				</div>
 			</div>
+			<!-- Show description -->
 			<div class="show-description lead" ng-bind-html="show.description"></div>
+			<!-- Links menu -->
+			<div class="show-links-menu dropdown" ng-if="show.links && show.links.menu" dropdown>
+				<button type="button" class="btn dropdown-toggle" dropdown-toggle>
+					{{ show.links.menuTitle }}
+				</button>
+				<ul class="dropdown-menu">
+					<li ng-repeat="link in show.links.menu">
+						<a ng-href="{{ link.url }}">
+							{{ link.title }}
+						</a>
+						<span class="btn" ng-repeat="action in link.actions" ng-href="{{ action.url }}">
+							{{ action.title }}
+						</span>
+					</li>
+				</ul>
+			</div>
+			<!-- Links list -->
+			<div class="show-links-list" ng-if="show.links && show.links.list">
+				<div class="show-link" ng-repeat="link in show.links.list">
+					<a href="javascript://" ng-click="selectSource(link.url)" class="link-heading">
+						{{ link.title }}
+					</a>
+					<span ng-if="link.actions && link.actions.length">
+						&nbsp;&mdash;&nbsp;
+					</span>
+					<a ng-repeat="action in link.actions" ng-href="{{ action.url }}">
+						{{ action.title }}
+					</a>
+				</div>
+			</div>
+			<!-- Programme homepage -->
 			<div class="show-category-link" ng-if="show.categoryUrl">
 				<a ng-href="{{ show.categoryUrl }}" class="marker-more">
 					{{ strings('programmeHomepage') }}
 				</a>
 			</div>
+			<!-- Open channel in new window -->
 			<div class="show-channel-link" ng-if="show.channelUrl && show.media.sources.length > 1">
 				<a ng-href="{{ show.channelUrl }}" target="_blank">
 					{{ strings('openInNewWindow') }}
 				</a>
 			</div>
 		</div>
+		<!-- Alternative media formats -->
 		<div class="media-formats" ng-if="show.media.formats">
 			<div class="category">
 				{{ strings('alternativeListening') }}
@@ -40,6 +86,7 @@
 				{{ format.codec }} {{ format.bitrate }}K
 			</a>
 		</div>
+		<!-- Playlist viewer -->
 		<div class="playlist-container" ng-if="show.playlist">
 			<label class="btn">
 				<input type="checkbox" class="playlist-toggle" ng-model="view.showPlaylist">
