@@ -25,8 +25,8 @@
 
 		function showChanged() {
 			var show = scope.show;
-			if (show && show.media && show.media.sources && show.media.sources.length) {
-				selectSource(show.media.sources[0]);
+			if (show && show.media && show.media.length) {
+				selectSource(show.media[0]);
 			} else {
 				scope.activeSource = null;
 			}

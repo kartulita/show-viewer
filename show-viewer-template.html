@@ -10,8 +10,8 @@
 			<div class="show-media-live-container" ng-if="activeSource">
 				<iframe ng-src="{{ activeSource }}" class="show-media-live" scrolling="no"></iframe>
 			</div>
-			<div class="show-media-sources" ng-if="show.media.sources.length > 1">
-				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-click="selectSource(source)" href="javascript://">
+			<div class="show-media-sources" ng-if="show.media.length > 1">
+				<a ng-repeat="source in show.media" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-click="selectSource(source)" href="javascript://">
 					#{{ $index + 1 }}
 				</a>
 			</div>
@@ -39,12 +39,13 @@
 				<button type="button" class="btn dropdown-toggle" dropdown-toggle>
 					{{ show.links.menuTitle }}
 				</button>
-				<ul class="dropdown-menu">
-					<li ng-repeat="link in show.links.menu">
-						<a ng-href="{{ link.url }}">
+				<ul class="dropdown-menu show-links-menu-items">
+					<li ng-repeat="link in show.links.menu" class="show-link" ng-class="link.class">
+						<a ng-href="{{ link.url }}" class="link-heading" title="{{ link.title }}">
+							<i ng-class="link.iconClass" ng-if="link.iconClass"></i>
 							{{ link.title }}
 						</a>
-						<span class="btn" ng-repeat="action in link.actions" ng-href="{{ action.url }}">
+						<span class="btn" class="show-link-action" ng-repeat="action in link.actions" ng-href="{{ action.url }}" ng-class="action.class">
 							{{ action.title }}
 						</span>
 					</li>
@@ -52,14 +53,15 @@
 			</div>
 			<!-- Links list -->
 			<div class="show-links-list" ng-if="show.links && show.links.list">
-				<div class="show-link" ng-repeat="link in show.links.list">
-					<a href="javascript://" ng-click="selectSource(link.url)" class="link-heading">
+				<div class="show-link" ng-repeat="link in show.links.list" ng-class="link.class">
+					<a href="javascript://" ng-click="selectSource(link.url)" class="link-heading" title="{{ link.title }}">
+						<i ng-class="link.iconClass" ng-if="link.iconClass"></i>
 						{{ link.title }}
 					</a>
 					<span ng-if="link.actions && link.actions.length">
 						&nbsp;&mdash;&nbsp;
 					</span>
-					<a ng-repeat="action in link.actions" ng-href="{{ action.url }}">
+					<a ng-repeat="action in link.actions" ng-href="{{ action.url }}" class="show-link-action" ng-class="action.class">
 						{{ action.title }}
 					</a>
 				</div>
@@ -71,7 +73,7 @@
 				</a>
 			</div>
 			<!-- Open channel in new window -->
-			<div class="show-channel-link" ng-if="show.channelUrl && show.media.sources.length > 1">
+			<div class="show-channel-link" ng-if="show.channelUrl && show.media.length > 1">
 				<a ng-href="{{ show.channelUrl }}" target="_blank">
 					{{ strings('openInNewWindow') }}
 				</a>

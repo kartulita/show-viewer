@@ -69,8 +69,23 @@
 		margin-bottom: 8px;
 	}
 
-	.show-links-list .show-link {
-		margin-bottom: 4px;
+	.show-links-list {
+		.show-link {
+			margin-bottom: 4px;
+			white-space: nowrap;
+		}
+		.link-heading {
+			display: inline-block;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			max-width: 100%;
+		}
+	}
+
+	.link-heading:hover {
+		/* God only knows why someone set color to same as background-color with !important in the original theme */
+		color: white !important;
 	}
 
 	.media-formats .format {
