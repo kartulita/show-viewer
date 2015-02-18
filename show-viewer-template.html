@@ -6,12 +6,12 @@
 	<!-- Show image/media viewer -->
 	<div class="span6 media-column" ng-if="show.media || show.image">
 		<div class="show-media">
-			<img ng-if="show.image && !show.media && !activeSource" class="show-media-image" ng-src="{{ show.image }}" width="100%">
+			<img ng-if="show.image && !activeSource" class="show-media-image" ng-src="{{ show.image }}" width="100%">
 			<div class="show-media-live-container" ng-if="activeSource">
 				<iframe ng-src="{{ activeSource }}" class="show-media-live" scrolling="no"></iframe>
 			</div>
-			<div class="show-media-sources" ng-if="show.media.length > 1">
-				<a ng-repeat="source in show.media" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-click="selectSource(source)" href="javascript://">
+			<div class="show-media-sources" ng-if="show.media.sources.length > 1">
+				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-click="selectSource(source)" href="javascript://">
 					#{{ $index + 1 }}
 				</a>
 			</div>
@@ -41,7 +41,7 @@
 				</button>
 				<ul class="dropdown-menu show-links-menu-items">
 					<li ng-repeat="link in show.links.menu" class="show-link" ng-class="link.class">
-						<a ng-href="{{ link.url }}" class="link-heading" title="{{ link.title }}">
+						<a ng-href="{{ link.url }}" class="link-heading" title="{{ link.title }}" target="_blank">
 							<i ng-class="link.iconClass" ng-if="link.iconClass"></i>
 							{{ link.title }}
 						</a>
@@ -73,20 +73,11 @@
 				</a>
 			</div>
 			<!-- Open channel in new window -->
-			<div class="show-channel-link" ng-if="show.channelUrl && show.media.length > 1">
+			<div class="show-channel-link" ng-if="show.channelUrl" old-ng-if="show.channelUrl && show.media.sources.length > 1">
 				<a ng-href="{{ show.channelUrl }}" target="_blank">
 					{{ strings('openInNewWindow') }}
 				</a>
 			</div>
-		</div>
-		<!-- Alternative media formats -->
-		<div class="media-formats" ng-if="show.media.formats">
-			<div class="category">
-				{{ strings('alternativeListening') }}
-			</div>
-			<a class="format btn" ng-repeat="format in show.media.formats" ng-href="{{ format.url }}">
-				{{ format.codec }} {{ format.bitrate }}K
-			</a>
 		</div>
 		<!-- Playlist viewer -->
 		<div class="playlist-container" ng-if="show.playlist">
@@ -104,6 +95,15 @@
 					</span>
 				</div>
 			</div>
+		</div>
+		<!-- Alternative media formats -->
+		<div class="media-formats" ng-if="show.media.formats">
+			<div class="category">
+				{{ strings('alternativeListening') }}
+			</div>
+			<a class="format btn" ng-repeat="format in show.media.formats" ng-href="{{ format.url }}" target="_blank">
+				{{ format.codec }} {{ format.bitrate }}K
+			</a>
 		</div>
 	</div>
 </div>
