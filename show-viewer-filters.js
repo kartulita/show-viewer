@@ -1,4 +1,4 @@
-(function (angular, moment) {
+(function (angular) {
 	'use strict';
 
 	angular.module('battlesnake.show-viewer')
@@ -7,8 +7,11 @@
 
 	function showViewerDateTimeFilter() {
 		return function (when) {
-			return moment(when).local().format('DD.MM.YYYY HH:mm');
+			if (!when) {
+				return '';
+			}
+			return when.local().format('DD.MM.YYYY HH:mm');
 		};
 	}
 
-})(window.angular, window.moment);
+})(window.angular);

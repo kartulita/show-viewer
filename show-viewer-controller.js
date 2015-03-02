@@ -26,14 +26,15 @@
 		function showChanged() {
 			var show = scope.show;
 			if (show && show.media.sources && show.media.sources.length) {
-				selectSource(show.media.sources[0]);
+				selectSource(show.media.sources[0], null);
 			} else {
 				scope.activeSource = null;
 			}
 		}
 
-		function selectSource(source) {
+		function selectSource(source, title) {
 			scope.activeSource = source;
+			scope.activeSourceTitle = title;
 		}
 	}
 

@@ -11,9 +11,12 @@
 				<iframe ng-src="{{ activeSource }}" class="show-media-live" scrolling="no"></iframe>
 			</div>
 			<div class="show-media-sources" ng-if="show.media.sources.length > 1">
-				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-click="selectSource(source)" href="javascript://">
+				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-click="selectSource(source, null)" href="javascript://">
 					#{{ $index + 1 }}
 				</a>
+			</div>
+			<div class="show-media-active-title" ng-if="activeSourceTitle">
+				{{ activeSourceTitle }}
 			</div>
 		</div>
 	</div>
@@ -54,7 +57,7 @@
 			<!-- Links list -->
 			<div class="show-links-list" ng-if="show.links && show.links.list">
 				<div class="show-link" ng-repeat="link in show.links.list" ng-class="link.class">
-					<a href="javascript://" ng-click="selectSource(link.url)" class="link-heading" title="{{ link.title }}">
+					<a href="javascript://" ng-click="selectSource(link.url, link.title)" class="link-heading" title="{{ link.title }}" ng-class="{ active: (activeSource === link.url) }">
 						<i ng-class="link.iconClass" ng-if="link.iconClass"></i>
 						{{ link.title }}
 					</a>
