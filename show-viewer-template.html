@@ -85,7 +85,8 @@
 		<!-- Playlist viewer -->
 		<div class="playlist-container" ng-if="show.playlist">
 			<label class="btn">
-				<input type="checkbox" class="playlist-toggle" ng-model="view.showPlaylist">
+				<!-- Apologies for the inline CSS, but this button should never need to be shown, and my stylesheet seems to be overridden by a site-specific one at ERR -->
+				<input type="checkbox" class="playlist-toggle" ng-model="view.showPlaylist" style="display:none">
 				{{ strings('showPlaylist') }}
 			</label>
 			<div ng-if="view.showPlaylist" class="playlist">
