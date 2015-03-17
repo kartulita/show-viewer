@@ -24,8 +24,8 @@
 			download: 'Lae alla'
 		},
 		ru: {
-			openInNewWindow: null,
-			programmeHomepage: null,
+			openInNewWindow: 'Открыть в новом окне',
+			programmeHomepage: 'На страницу передачи',
 			alternativeListening: null,
 			showPlaylist: null,
 			download: null
