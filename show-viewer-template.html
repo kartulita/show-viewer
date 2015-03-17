@@ -1,7 +1,3 @@
-<!-- (Ab)uses bootstrap -->
-<!-- Since partial bootstrap use is essentially coupling this to the parent  -->
-<!-- layout, we should draw up some consistent standard for bootstrap use    -->
-<!-- throughout the project, which would simplify other components a bit     -->
 <div class="row show-viewer">
 	<!-- Show image/media viewer -->
 	<div class="span6 media-column" ng-if="show.media || show.image">
@@ -12,7 +8,7 @@
 			</div>
 			<div class="show-media-sources" ng-if="show.media.sources.length > 1">
 				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-click="selectSource(source, null)" href="javascript://">
-					#{{ $index + 1 }}
+					#{{ source.name || ($index + 1) }}
 				</a>
 			</div>
 			<div class="show-media-active-title" ng-if="activeSourceTitle">
