@@ -11,6 +11,8 @@
 			controller: 'showViewerController',
 			scope: {
 				show: '=showViewer',
+				canShowPlaylist: '=',
+				showTimesInPlaylist: '='
 			},
 			templateUrl: 'show-viewer-template.html',
 			link: link

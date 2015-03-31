@@ -120,7 +120,10 @@ body {
 		</div>
 	</div>
 	<!-- The show viewer -->
-	<div show-viewer="model.show" class="show-viewer-container kartulita container"></div>
+	<div show-viewer="model.show"
+		can-show-playlist="model.adapter.showViewer.canShowPlaylist"
+		show-times-in-playlist="model.adapter.showViewer.showTimesInPlaylist"
+		class="show-viewer-container kartulita container"></div>
 	<!-- That's all there is to it! -->
 </body>
 <script src="bower_components/less/dist/less.min.js"></script>

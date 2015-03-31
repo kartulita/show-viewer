@@ -79,7 +79,8 @@
 			</div>
 		</div>
 		<!-- Playlist viewer -->
-		<div class="playlist-container" ng-if="show.playlist">
+		<div class="playlist-container"
+			ng-if="show.playlist && (!canShowPlaylist || canShowPlaylist(show, playlist))">
 			<label class="btn">
 				<!-- Apologies for the inline CSS, but this button should never need to be shown, and my stylesheet seems to be overridden by a site-specific one at ERR -->
 				<input type="checkbox" class="playlist-toggle" ng-model="view.showPlaylist" style="display:none">
@@ -87,7 +88,7 @@
 			</label>
 			<div ng-if="view.showPlaylist" class="playlist">
 				<div class="playlist-item" ng-repeat="item in show.playlist.items">
-					<span class="playlist-field time timestamp-no-overflow-base bold" ng-if="item.time">
+					<span class="playlist-field time timestamp-no-overflow-base bold" ng-if="item.time && showTimesInPlaylist">
 						{{ item.time }}
 					</span>
 					<span class="playlist-field title">
