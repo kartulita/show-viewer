@@ -8,7 +8,7 @@
 			</div>
 			<div class="show-media-sources" ng-if="show.media.sources.length > 1">
 				<a ng-repeat="source in show.media.sources" class="show-media-source" ng-class="{ selected: (activeSource === source) }" ng-click="selectSource(source, null)" href="javascript://">
-					#{{ source.name || ($index + 1) }}
+					{{ source.name || ('#' + ($index + 1)) }}
 				</a>
 			</div>
 			<div class="show-media-active-title" ng-if="activeSourceTitle">
@@ -72,7 +72,7 @@
 				</a>
 			</div>
 			<!-- Open channel in new window -->
-			<div class="show-channel-link" ng-if="show.channelUrl" old-ng-if="show.channelUrl && show.media.sources.length > 1">
+			<div class="show-channel-link" ng-if="show.channelUrl && show.media.getIsPlaying()">
 				<a ng-href="{{ show.channelUrl }}" target="_blank">
 					{{ strings('openInNewWindow') }}
 				</a>
