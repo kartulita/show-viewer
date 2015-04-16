@@ -65,7 +65,7 @@
 			$scope.showListItem = function (show) {
 				return show.start.format('HH:mm') + ': ' + show.title;
 			};
-			$scope.model.adapter.timeline.getDay(moment())
+			$scope.model.adapter.timeline.getGroup(moment())
 				.then(loadShows);
 		}
 
@@ -99,10 +99,6 @@ body {
 	font-family: sans-serif;
 	margin-top: 60px;
 }
-.show-viewer-container {
-	border: 1px solid #aaa;
-	box-shadow: 0px 0px 12px 3px rgba(90, 90, 90, 0.5);
-}
 .show-viewer {
 	padding-bottom: 0;
 }
@@ -120,10 +116,12 @@ body {
 		</div>
 	</div>
 	<!-- The show viewer -->
-	<div show-viewer="model.show"
-		can-show-playlist="model.adapter.showViewer.canShowPlaylist"
-		show-times-in-playlist="model.adapter.showViewer.showTimesInPlaylist"
-		class="show-viewer-container kartulita container"></div>
+	<div class="container">
+		<div show-viewer="model.show"
+			can-show-playlist="model.adapter.showViewer.canShowPlaylist"
+			show-times-in-playlist="model.adapter.showViewer.showTimesInPlaylist"
+			class="kartulita row"></div>
+	</div>
 	<!-- That's all there is to it! -->
 </body>
 <script src="bower_components/less/dist/less.min.js"></script>
